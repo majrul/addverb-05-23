@@ -10,10 +10,12 @@
     <context:component-scan base-package="org.example.repository" />
 
     <!-- DataSource configuration -->
-    <bean id = "dataSource" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+<!--    <bean id = "dataSource" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <bean id = "dataSource" class = "org.apache.commons.dbcp2.BasicDataSource" init-method="createDataSource">
         <property name = "driverClassName" value = "com.mysql.cj.jdbc.Driver" />
         <property name = "url" value = "jdbc:mysql://localhost:3306/training" />
         <property name = "username" value = "root" />
         <property name = "password" value = "passw0rd" />
+        <property name = "initialSize" value = "3" />
     </bean>
 </beans>

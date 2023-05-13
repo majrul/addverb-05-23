@@ -9,15 +9,18 @@ public class App {
 
     public static void main(String[] args) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("my-spring-config.xml");
-        CarPartsInventory cpInv = ctx.getBean("carPartsInv1", CarPartsInventory.class);
+        CarPartsInventory cpInv = ctx.getBean("carPartsInv2", CarPartsInventory.class);
 
         CarPart carPart = new CarPart();
-        carPart.setPartNo(101);
-        carPart.setPartName("Nut & Bolt");
+        carPart.setPartNo(103);
+        carPart.setPartName("Seat Belt");
         carPart.setCarModel("Maruti 800");
-        carPart.setPrice(500);
+        carPart.setPrice(2600);
         carPart.setQuantity(99);
 
+        long ms1 = System.currentTimeMillis();
         cpInv.addNewPart(carPart);
+        long ms2 = System.currentTimeMillis();
+        System.out.println("Approx time taken " + (ms2 - ms1) + " ms");
     }
 }
