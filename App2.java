@@ -15,8 +15,8 @@ public class App2 {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("my-spring-config.xml");
         CarPartsRepository cpInv = ctx.getBean(CarPartsRepository.class);
 
-
-        List<CarPart> list = cpInv.findAll();
+        //List<CarPart> list = cpInv.findAll();
+        List<CarPart> list = cpInv.fetchByCarModel("Maruti 800");
         for(CarPart cp : list)
             System.out.println(cp);
     }
