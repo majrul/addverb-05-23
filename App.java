@@ -5,13 +5,15 @@ import org.example.repository.CarPartsInventory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
+
 public class App {
 
     public static void main(String[] args) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("my-spring-config.xml");
-        CarPartsInventory cpInv = ctx.getBean("carPartsInv2", CarPartsInventory.class);
+        CarPartsInventory cpInv = ctx.getBean("carPartsInv4", CarPartsInventory.class);
 
-        CarPart carPart = new CarPart();
+        /*CarPart carPart = new CarPart();
         carPart.setPartNo(103);
         carPart.setPartName("Seat Belt");
         carPart.setCarModel("Maruti 800");
@@ -21,6 +23,10 @@ public class App {
         long ms1 = System.currentTimeMillis();
         cpInv.addNewPart(carPart);
         long ms2 = System.currentTimeMillis();
-        System.out.println("Approx time taken " + (ms2 - ms1) + " ms");
+        System.out.println("Approx time taken " + (ms2 - ms1) + " ms");*/
+
+        List<CarPart> list = cpInv.getAvailableParts();
+        for(CarPart cp : list)
+            System.out.println(cp);
     }
 }
