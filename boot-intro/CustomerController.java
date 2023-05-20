@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.CustomerDto;
 import com.example.dto.RegisterStatus;
 import com.example.dto.Status;
 import com.example.entity.Customer;
@@ -8,10 +9,7 @@ import com.example.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CustomerController {
@@ -45,17 +43,26 @@ public class CustomerController {
                 .body(registerStatus);
     }
 
-    @ExceptionHandler(CustomerServiceException.class)
-    public ResponseEntity<Status> handlException(CustomerServiceException e) {
-        Status status = new Status();
-        status.setStatusCode(-100); //some superficial code
-        status.setMessageIfAny(e.getMessage());
-        return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+    @GetMapping("/customer/{id}")
+    public Customer fetch(@PathVariable int id) {
+        return customerService.fetchById(id);
     }
-    /*public Status handlException(CustomerServiceException e) {
+
+    @PutMapping("/customer/update")
+    public Status update(@RequestBody  Customer customer) {
+        customerService.update(customer);
         Status status = new Status();
-        status.setStatusCode(-100); //some superficial code
-        status.setMessageIfAny(e.getMessage());
+        status.setStatusCode(200); //again some superficial code
+        status.setMessageIfAny("Customer updated!");
         return status;
-    }*/
+    }
+
+    @PatchMapping("/customer/patch")
+    public Status update(@RequestBody CustomerDto customerDto) {
+        customerService.partialUpdate(customerDto);
+        Status status = new Status();
+        status.setStatusCode(200); //again some superficial code
+        status.setMessageIfAny("Customer updated!");
+        return status;
+    }
 }

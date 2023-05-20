@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.CustomerDto;
 import com.example.entity.Customer;
 import com.example.exception.CustomerServiceException;
 import com.example.repository.CustomerRepository;
@@ -30,4 +31,29 @@ public class CustomerService {
         }
     }
 
+    public Customer fetchById(int id) {
+        return customerRepository
+                .findById(id)
+                .orElseThrow(() -> new CustomerServiceException("No such customer!"));
+    }
+
+    public void update(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    public void partialUpdate(CustomerDto customerDto) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerDto.getId());
+        if(optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+            if(customerDto.getPropertyName().equals("name"))
+                customer.setName(customerDto.getPropertyValue());
+            else if(customerDto.getPropertyName().equals("email"))
+                customer.setEmail(customerDto.getPropertyValue());
+            else if(customerDto.getPropertyName().equals("city"))
+                customer.setCity(customerDto.getPropertyValue());
+            customerRepository.save(customer);
+        }
+        else
+            throw new CustomerServiceException("No such customer!");
+    }
 }
