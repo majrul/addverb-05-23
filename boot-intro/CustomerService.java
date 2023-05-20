@@ -56,4 +56,9 @@ public class CustomerService {
         else
             throw new CustomerServiceException("No such customer!");
     }
+
+    public void delete(int id) {
+        //customerRepository.deleteById(id);
+        customerRepository.deleteCustomer(id);
+    }
 }

@@ -65,4 +65,13 @@ public class CustomerController {
         status.setMessageIfAny("Customer updated!");
         return status;
     }
+
+    @DeleteMapping("/customer/delete/{id}")
+    public Status update(@PathVariable int id) {
+        customerService.delete(id);
+        Status status = new Status();
+        status.setStatusCode(300); //again some superficial code
+        status.setMessageIfAny("Customer deleted!");
+        return status;
+    }
 }
